@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec setxkbmap "us,ru" ",winkeys" "grp:ctrl_shift_toggle"
+xset r rate 500 50

@@ -1,0 +1,9 @@
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+[push]
+	default = simple
+[core]
+	excludesfile = /home/s.abbakumov/.gitignore_global
