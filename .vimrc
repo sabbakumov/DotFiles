@@ -1,4 +1,4 @@
-"set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -35,6 +35,10 @@ Plugin 'rdnetto/YCM-Generator'
 Plugin 'L9'
 Plugin 'FuzzyFinder'
 
+Plugin 'tsukkee/unite-tag'
+
+Plugin 'terryma/vim-smooth-scroll'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -49,6 +53,10 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+source $VIMRUNTIME/delmenu.vim
+set langmenu=en_US.UTF-8
+source $VIMRUNTIME/menu.vim
 
 set number
 set relativenumber
@@ -65,8 +73,6 @@ set nowrap
 set incsearch
 
 syntax on
-
-"set nocompatible
 
 set hidden
 
@@ -95,20 +101,27 @@ set guioptions-=T
 
 set ch=2
 
-set guifont=Droid\ Sans\ Mono\ 9
+if has("macunix")
+  set guifont=Menlo:h11
+elseif has("win32")
+  set guifont=Consolas:h10
+else
+  set guifont=DejaVu\ Sans\ Mono\ 9
+endif
 
 autocmd BufRead * '" 
 
 set smartindent
-set shiftwidth=4
-set tabstop=4
-set noexpandtab
+set shiftwidth=2
+set tabstop=2
+set expandtab
 
+set backspace=2
 
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
-"set colorcolumn=101
+set colorcolumn=81
 highlight ColorColumn ctermbg=235 guibg=#303030
 
 set tags=tags;/
@@ -120,27 +133,49 @@ set cpoptions+=$
 set laststatus=2
 set statusline=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
 
-map <C-K> :pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
-imap <C-K> <c-o>:pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
+"map <C-K> :pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
+"imap <C-K> <c-o>:pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
 
 map <C-H> :YcmCompleter GoToDeclaration<CR>
+"map <C-M> :YcmCompleter GoToDefinition<CR>
 map <F10> :YcmCompleter GoToReferences<CR>
 
 let g:ctrlp_root_markers = ['.root']
+let g:ctrlp_max_files = 0
+let g:ctrlp_user_command = 'ag -l --nocolor --hidden -g "" %s'
+let g:user_command_async = 1
+let g:ctrlp_lazy_update = 1
+let g:ctrlp_map = ''
 nmap ,f :CtrlPBuffer<cr>
+
+set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
 "runtime! ftplugin/man.vim
 
 imap jj <Esc>
 cmap jj <Esc>
 "set term=screen-256color
-"set nocompatible
 "set ttyfast
 set lazyredraw
 
 let g:EclimCompletionMethod = 'omnifunc'
 let g:EclimCSearchSingleResult = 'edit'
-nmap <C-J> :CSearchContext<CR>
+nmap <C-M> :CSearchContext<CR>
+
+nmap <C-P> :LocateFile<CR>
+
+"nmap <C-J> <C-D>
+"nmap <C-K> <C-U>
+noremap <silent> <C-K> :call smooth_scroll#up(&scroll, 0, 3)<CR>
+noremap <silent> <C-J> :call smooth_scroll#down(&scroll, 0, 3)<CR>
+
+set shellslash
+
+set encoding=utf-8
+
+au BufEnter *.h let b:fswitchdst  = 'cpp,cc'
+au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
+au BufEnter *.cc let b:fswitchdst  = 'h,hpp'
 
 "autocmd CursorMoved * exe printf('match StatusLine /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 

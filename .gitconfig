@@ -6,4 +6,4 @@
 [push]
 	default = simple
 [core]
-	excludesfile = /home/s.abbakumov/.gitignore_global
+	excludesfile = ~/.gitignore_global
