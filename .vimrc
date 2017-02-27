@@ -37,8 +37,6 @@ Plugin 'FuzzyFinder'
 
 Plugin 'tsukkee/unite-tag'
 
-Plugin 'terryma/vim-smooth-scroll'
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -98,11 +96,13 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 "set lines=999
 
 set guioptions-=T
+set guioptions-=r
+set guioptions+=a
 
 set ch=2
 
 if has("macunix")
-  set guifont=Menlo:h11
+  set guifont=Menlo\ Regular:h12
 elseif has("win32")
   set guifont=Consolas:h10
 else
@@ -133,8 +133,8 @@ set cpoptions+=$
 set laststatus=2
 set statusline=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
 
-"map <C-K> :pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
-"imap <C-K> <c-o>:pyf /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
+map <F8> :pyf ~/.vim/clang-format.py<cr>
+imap <F8> <c-o>:pyf ~/.vim/clang-format.py<cr>
 
 map <C-H> :YcmCompleter GoToDeclaration<CR>
 "map <C-M> :YcmCompleter GoToDefinition<CR>
@@ -154,6 +154,7 @@ set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ve
 
 imap jj <Esc>
 cmap jj <Esc>
+nmap ; :
 "set term=screen-256color
 "set ttyfast
 set lazyredraw
@@ -164,18 +165,26 @@ nmap <C-M> :CSearchContext<CR>
 
 nmap <C-P> :LocateFile<CR>
 
-"nmap <C-J> <C-D>
-"nmap <C-K> <C-U>
-noremap <silent> <C-K> :call smooth_scroll#up(&scroll, 0, 3)<CR>
-noremap <silent> <C-J> :call smooth_scroll#down(&scroll, 0, 3)<CR>
+nmap <C-J> 10<C-D>
+nmap <C-K> 10<C-U>
+
+noremap <silent> ,h :wincmd h<CR>
+noremap <silent> ,j :wincmd j<CR>
+noremap <silent> ,k :wincmd k<CR>
+noremap <silent> ,l :wincmd l<CR>
 
 set shellslash
 
 set encoding=utf-8
 
-au BufEnter *.h let b:fswitchdst  = 'cpp,cc'
+au BufEnter *.h let b:fswitchdst  = 'cpp,cc,m,mm'
 au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
 au BufEnter *.cc let b:fswitchdst  = 'h,hpp'
+au BufEnter *.m let b:fswitchdst  = 'h'
+au BufEnter *.mm let b:fswitchdst  = 'h'
+au BufEnter *.mm let b:fswitchlocs  = 'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|'
+
+set listchars=tab:>.,space:.
 
 "autocmd CursorMoved * exe printf('match StatusLine /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 
