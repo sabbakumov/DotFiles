@@ -37,6 +37,8 @@ Plugin 'FuzzyFinder'
 
 Plugin 'tsukkee/unite-tag'
 
+Plugin 'mileszs/ack.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -51,6 +53,10 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 source $VIMRUNTIME/delmenu.vim
 set langmenu=en_US.UTF-8
@@ -69,6 +75,7 @@ set cursorline
 set nowrap
 
 set incsearch
+nmap ,s :nohlsearch<CR>
 
 syntax on
 
