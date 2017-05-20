@@ -39,6 +39,8 @@ Plugin 'tsukkee/unite-tag'
 
 Plugin 'mileszs/ack.vim'
 
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -57,6 +59,10 @@ filetype plugin indent on    " required
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
 
 source $VIMRUNTIME/delmenu.vim
 set langmenu=en_US.UTF-8
